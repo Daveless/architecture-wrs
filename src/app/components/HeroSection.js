@@ -11,9 +11,6 @@ export const HeroSection = () => {
 
   useEffect(() => {
     const duration = 2; // Duración de la animación en segundos
-    const incrementExperience = 15 / (duration * 60); // 15+ años de experiencia
-    const incrementProjects = 200 / (duration * 60); // 200+ proyectos completados
-    const incrementAwards = 50 / (duration * 60); // 50+ premios de diseño
 
     let startTime
 
