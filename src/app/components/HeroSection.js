@@ -2,10 +2,42 @@
 import { motion } from 'framer-motion';
 import { SITE_CONFIG } from '../utils/constants';
 import { ChevronDown } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 export const HeroSection = () => {
+  const [experience, setExperience] = useState(0);
+  const [projects, setProjects] = useState(0);
+  const [awards, setAwards] = useState(0);
+
+  useEffect(() => {
+    const duration = 2; // Duración de la animación en segundos
+    const incrementExperience = 15 / (duration * 60); // 15+ años de experiencia
+    const incrementProjects = 200 / (duration * 60); // 200+ proyectos completados
+    const incrementAwards = 50 / (duration * 60); // 50+ premios de diseño
+
+    let startTime
+
+    const animate = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = timestamp - startTime;
+
+      if (progress < duration * 1000) {
+        setExperience(Math.min(15, (progress / 1000) * (15 / duration)));
+        setProjects(Math.min(200, (progress / 1000) * (200 / duration)));
+        setAwards(Math.min(50, (progress / 1000) * (50 / duration)));
+        requestAnimationFrame(animate);
+      } else {
+        setExperience(15);
+        setProjects(200);
+        setAwards(50);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, []);
+
   const scrollToNextSection = () => {
-    const nextSection = document.getElementById('servicios');
+    const nextSection = document.getElementById('contacto');
     nextSection?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -47,25 +79,19 @@ export const HeroSection = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-[#2A3D66] text-white rounded-lg font-semibold 
-                          shadow-lg hover:shadow-xl transition-all duration-300 
-                          min-w-[200px] border border-white/20"
-              >
-                Nuestro Portfolio
-              </motion.button>
-              
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-lg 
-                          font-semibold shadow-lg hover:shadow-xl transition-all duration-300 
-                          min-w-[200px] border border-white/20"
-              >
-                Contactar
-              </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                const contactSection = document.getElementById('contacto');
+                contactSection?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="px-8 py-4 bg-[#2A3D66] text-white rounded-lg font-semibold 
+                        shadow-lg hover:shadow-xl transition-all duration-300 
+                        min-w-[200px] border border-white/20"
+            >
+              Contactar
+            </motion.button>
             </div>
           </motion.div>
         </div>
@@ -95,7 +121,7 @@ export const HeroSection = () => {
               transition={{ delay: 0.6 }}
               className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20"
             >
-              <p className="text-3xl font-bold text-white mb-2">15+</p>
+              <p className="text-3xl font-bold text-white mb-2">{Math.round(experience)}+</p>
               <p className="text-white/80">Años de Experiencia</p>
             </motion.div>
             
@@ -105,7 +131,7 @@ export const HeroSection = () => {
               transition={{ delay: 0.7 }}
               className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20"
             >
-              <p className="text-3xl font-bold text-white mb-2">200+</p>
+              <p className="text-3xl font-bold text-white mb-2">{Math.round(projects)}+</p>
               <p className="text-white/80">Proyectos Completados</p>
             </motion.div>
             
@@ -115,7 +141,7 @@ export const HeroSection = () => {
               transition={{ delay: 0.8 }}
               className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20"
             >
-              <p className="text-3xl font-bold text-white mb-2">50+</p>
+              <p className="text-3xl font-bold text-white mb-2">{Math.round(awards)}+</p>
               <p className="text-white/80">Premios de Diseño</p>
             </motion.div>
           </div>

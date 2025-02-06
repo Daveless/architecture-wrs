@@ -40,7 +40,7 @@ export const Navigation = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
-            {['Inicio', 'Servicios', 'Testimonios', 'Contacto'].map((item) => (
+            {['Inicio', 'Servicios', 'Testimonios'].map((item) => (
               <motion.a
                 key={item}
                 href={`#${item.toLowerCase()}`}
@@ -74,27 +74,33 @@ export const Navigation = () => {
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              className="md:hidden absolute top-full left-0 right-0 bg-white shadow-lg"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-white z-50 p-6" // Ensuring a solid white background
+              initial={{ opacity: 0, x: '100%' }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: '100%' }}
             >
-              <div className="container-custom py-4 space-y-8 bg-gray-900 text-white">
-                {['Inicio', 'Servicios', 'Testimonios', 'Contacto'].map((item) => (
-                  <motion.a
+              <div className="flex flex-col space-y-4">
+                {['Inicio', 'Servicios', 'Testimonios'].map((item) => (
+                  <motion.button
                     key={item}
-                    href={`#${item.toLowerCase()}`}
-                    className="block text-white text-center hover:text-primary transition-colors px-5"
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => {
+                      const section = document.getElementById(item.toLowerCase());
+                      section?.scrollIntoView({ behavior: 'smooth' });
+                      setIsOpen(false);
+                    }}
                     whileHover={{ x: 10 }}
+                    className="text-left text-xl font-semibold"
                   >
                     {item}
-                  </motion.a>
+                  </motion.button>
                 ))}
                 <motion.button
-                  className="btn-primary w-full"
-                  whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    const contactSection = document.getElementById('contacto');
+                    contactSection?.scrollIntoView({ behavior: 'smooth' });
+                    setIsOpen(false);
+                  }}
+                  className="px-6 py-2 bg-[#2A3D66] text-white rounded-lg font-semibold hover:bg-[#2A3D66]/90 transition-colors"
                 >
                   Reservar Cita
                 </motion.button>
