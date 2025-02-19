@@ -19,8 +19,8 @@ export const Navigation = () => {
 
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 ${
-        scrolled ? 'bg-white/90 backdrop-blur-md shadow-lg' : 'bg-transparent'
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? 'bg-white shadow-lg' : 'bg-transparent'
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -29,11 +29,11 @@ export const Navigation = () => {
       <nav className="container-custom py-1 px-3">
         <div className="flex items-center justify-between">
           <motion.div
-            className="flex items-center space-x-2 "
+            className="flex items-center space-x-2"
             whileHover={{ scale: 1.05 }}
           >
             <TeethLogo />
-            <span className="font-bold text-[18px] text-primary">
+            <span className="font-bold text-lg text-primary">
               {SITE_CONFIG.name}
             </span>
           </motion.div>
@@ -44,7 +44,9 @@ export const Navigation = () => {
               <motion.a
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                className="text-gray-300 hover:text-primary transition-colors"
+                className={`transition-colors ${
+                  scrolled ? 'text-gray-600' : 'text-gray-300'
+                } hover:text-primary`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -62,7 +64,7 @@ export const Navigation = () => {
 
           {/* Mobile Menu Button */}
           <motion.button
-            className="md:hidden text-gray-600"
+            className={`md:hidden ${scrolled ? 'text-gray-600' : 'text-gray-300'}`}
             onClick={() => setIsOpen(!isOpen)}
             whileTap={{ scale: 0.95 }}
           >
@@ -74,7 +76,7 @@ export const Navigation = () => {
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              className="fixed inset-0 bg-white z-50 p-6" // Ensuring a solid white background
+              className="fixed inset-0 bg-white z-50 p-6"
               initial={{ opacity: 0, x: '100%' }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: '100%' }}
@@ -89,7 +91,7 @@ export const Navigation = () => {
                       setIsOpen(false);
                     }}
                     whileHover={{ x: 10 }}
-                    className="text-left text-xl font-semibold"
+                    className="text-left text-xl font-semibold text-gray-600"
                   >
                     {item}
                   </motion.button>
@@ -112,3 +114,5 @@ export const Navigation = () => {
     </motion.header>
   );
 };
+
+export default Navigation;
