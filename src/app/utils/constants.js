@@ -5,7 +5,7 @@ export const SITE_CONFIG = {
   contact: {
     phone: '+123456789',
     email: 'contacto@wrs-arquitectura.com',
-    whatsapp: '+593993272165',
+    whatsapp: '+593998493012',
     address: 'Tu dirección aquí',
     schedule: 'Lun - Vie: 9:00 - 18:00'
   }
